@@ -75,34 +75,35 @@ const TaskList: React.FC = () => {
   };
 
   if (loading) {
-    return <p>Загрузка...</p>;
+    return <p data-test-id="loading-message">Загрузка...</p>;
   }
 
   return (
     <div className="App">
-      <h1>Список задач</h1>
-      {error && <p className="error-message">{error}</p>}
-      <ul>
+      <h1 data-test-id="title">Список задач</h1>
+      {error && <p className="error-message" data-test-id="error-message">{error}</p>}
+      <ul data-test-id="task-list">
         {tasks.map((task) => (
           <li
             key={task.id}
             className={task.completed ? 'completed' : ''}
+            data-test-id={`task-${task.id}`}
           >
             <div>
-              <h2>{task.title}</h2>
-              <p>{task.description}</p>
+              <h2 data-test-id="todo-title">{task.title}</h2>
+              <p data-test-id="todo-description">{task.description}</p>
             </div>
             <div>
-              <button onClick={() => toggleTaskCompletion(task.id)}>
+              <button data-test-id="toggle-completion" onClick={() => toggleTaskCompletion(task.id)}>
                 {task.completed ? 'Снять отметку' : 'Отметить как выполненную'}
               </button>
-              <button className="delete" onClick={() => deleteTask(task.id)}>Удалить</button>
+              <button className="delete" data-test-id="delete-task" onClick={() => deleteTask(task.id)}>Удалить</button>
             </div>
           </li>
         ))}
       </ul>
 
-      <h2>Добавить новую задачу</h2>
+      <h2 data-test-id="add-task-title">Добавить новую задачу</h2>
       <form onSubmit={(e) => {
         e.preventDefault();
         addTask();
@@ -112,14 +113,16 @@ const TaskList: React.FC = () => {
           placeholder="Название задачи"
           value={newTaskTitle}
           onChange={(e) => setNewTaskTitle(e.target.value)}
+          data-test-id="new-task-title"
         />
         <input
           type="text"
           placeholder="Описание задачи"
           value={newTaskDescription}
           onChange={(e) => setNewTaskDescription(e.target.value)}
+          data-test-id="new-task-description"
         />
-        <button className="add-task" type="submit">Добавить задачу</button>
+        <button className="add-task" type="submit" data-test-id="add-task-button">Добавить задачу</button>
       </form>
     </div>
   );
